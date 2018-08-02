@@ -42,7 +42,7 @@ const command = (puppyFilePath, options) => {
                 const end = keyword.split(')');
                 keyword = part[0] + end[1];
                 const attributes = part[1].split(')')[0].split(',').reduce((acculum, item) => {
-                    const key = item.replace(/\'/g, '"');
+                    const key = item.replace(/\s+/g, '').replace(/\'/g, '"');
                     acculum += ` ${key}`;
                     return acculum;
                 }, '');
@@ -53,7 +53,7 @@ const command = (puppyFilePath, options) => {
                 const key = equals[0].replace(fourSpaces, '');
                 keyword = key;
                 let value = equals[1];
-                value = value[0] === "'" || value[0] === '"' ? value.slice(1, value.length - 2).replace(/\\/g, '') : value;
+                value = !!value && (value[0] === "'" || value[0] === '"') ? value.slice(1, value.length - 1).replace(/\\/g, '') : value;
                 object = { ...object, keyword: key, value };
             }
             if (!beginningHtml.test(keyword) && !endingHtml.test(keyword)) {
@@ -98,10 +98,14 @@ const command = (puppyFilePath, options) => {
             if (step.children && step.children.length > 0) {
                 respStr += step.begin + recurseResponse('', step.children) + step.end;
             }
+            if (!step.children && step.begin && step.end) {
+                respStr += step.begin + step.end;
+            }
         }
         return respStr;
     };
 
+    console.log(array);
     const responseString = recurseResponse('', array);
     console.log(responseString);
     return responseString;
