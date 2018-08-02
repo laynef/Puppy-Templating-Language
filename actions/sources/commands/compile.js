@@ -105,9 +105,7 @@ const command = (puppyFilePath, options) => {
         return respStr;
     };
 
-    console.log(array);
     const responseString = recurseResponse('', array);
-    console.log(responseString);
     return responseString;
 };
 
