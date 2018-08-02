@@ -3,6 +3,14 @@ const fs = require('fs');
 const description = 'Compile .puppy files into an html string';
 
 const command = (puppyFilePath, options) => {
+    const pathArray = puppyFilePath.split('/');
+    const fileName = pathArray[pathArray.length - 1];
+
+    if (!fileName.endsWith('.puppy')) {
+        console.log('Can only compile .puppy files');
+        return;
+    }
+
     const puppyFileString = fs.readFileSync(puppyFilePath, { encoding: 'utf8' });
     const keywords = {
         'doctype': '<!DOCTYPE html>',
@@ -14,7 +22,6 @@ const command = (puppyFilePath, options) => {
     const endingAttributes = /\)/g;
     const beginningHtml = new RegExp('<', 'g');
     const endingHtml = new RegExp('>', 'g');
-    const equalHtml = new RegExp('=', 'g');
     const array = [];
     let child = false;
     let levels = 0;
@@ -95,7 +102,9 @@ const command = (puppyFilePath, options) => {
         return respStr;
     };
 
-    return recurseResponse('', array);
+    const responseString = recurseResponse('', array);
+    console.log(responseString);
+    return responseString;
 };
 
 const documentation = () => {
