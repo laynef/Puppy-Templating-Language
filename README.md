@@ -9,6 +9,7 @@ puppy compile <YOUR .puppy file>
 
 ## Puppy File Syntax
 - Indent for a child html tag
+- An indentation is exactly 4 spaces
 - Attributes for that html tag are in parthesis '()'
 - Attributes for an html tag are separated by a ','
 - HTML tags are the tag name followed by a '=' and then the value inside that tag
