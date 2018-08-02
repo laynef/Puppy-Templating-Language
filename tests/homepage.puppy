@@ -1,6 +1,7 @@
 doctype
 html
     head
-        title=Hello World
+        title(class='title')=Hello World
     body
         h1='This puppy bites'
+        h2='She\'s not friendly'
